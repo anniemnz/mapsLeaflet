@@ -12,6 +12,16 @@
     color: white;
 }
 
-.custom-popup{
-	fill: none;
+.custom-popup h3{
+	text-transform: uppercase;
+	text-align: center;
+	padding-bottom: 6px;
+}
+
+.kcPopup img{
+	max-width: 190px;
+}
+
+.kcPopup h3{
+	text-transform: uppercase;
 }

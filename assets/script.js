@@ -2,7 +2,7 @@ $(function(){
 	// console.log('blah');
 	let center = [-36.72478249306733,174.41465377807614];
 
-	let map = L.map('map').setView(center,12);
+	let map = L.map('map').setView(center,14);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW1ueiIsImEiOiJjajZsZ3JzYjQxZHE2MzNteTJiM2hhczNqIn0.D_kx9IhyAvBz4FvjWQXJeA').addTo(map);
 
@@ -124,7 +124,7 @@ _(interestPoints).each(function(interest){
 					],
 					popup:{
 						className:'custom-popup',
-						content:'Woodhill Park Boundary<img src="assets/wp-logo.png">',
+						content:'<h3>Woodhill Park Boundary</h3><img src="assets/wp-logo.png">',
 						latlng:[-36.707169014703126,174.38787460327148]
 						}
 		}
@@ -136,8 +136,8 @@ _(interestPoints).each(function(interest){
 		let polygon = L.polygon(boundary.latlng,{color:'#61BF4F', weight:1}).addTo(map);
 
 		let popup = L.popup({
-				closeButton:false,
-				closeOnClick:false,
+				// closeButton:false,
+				// closeOnClick:false,
 				className: boundary.popup.className,
 				offset:[0,0],
 				maxWidth:190
@@ -161,34 +161,52 @@ _(interestPoints).each(function(interest){
 		{
 			name:'Kamma Cuzzy',
 			latlng: [
-			  [-36.72958937664222,174.38864707946777],
-	          [-36.729331411998096,174.3886363506317],
-	          [-36.72903905102044,174.3890118598938],
-	          [-36.728858474566394,174.38967704772946],
-	          [-36.72858330962934,174.39005255699158],
-	          [-36.72811036759001,174.39022421836853],
-	          [-36.72784379897519,174.3905782699585],
-	          [-36.72767181873259,174.39082503318787],
-	          [-36.72747404097744,174.39084649085996],
-	          [-36.72719887107943,174.39059972763062],
-	          [-36.72700969120258,174.39040660858154],
-	          [-36.7267431187669,174.39042806625366],
-	          [-36.72651954117184,174.39067482948303],
-	          [-36.72629596292585,174.39190864562988],
-	          [-36.726201371933534,174.3919730186462],
-	          [-36.72623576867149,174.39256310462952],
-	          [-36.726055185625306,174.3928849697113],
-	          [-36.72603798721781,174.39337849617004],
-	          [-36.725642422782315,174.39419388771057]
+			  [-36.73465390694624,174.4054913520813],
+	          [-36.73489465728431,174.40615653991696],
+	          [-36.735324566724465,174.40622091293335],
+	          [-36.735530922400606,174.40652132034302],
+	          [-36.735616903768616,174.40720796585083],
+	          [-36.73559970750272,174.4084525108337],
+	          [-36.735358959375674,174.40890312194824],
+	          [-36.735290174057845,174.4100832939148],
+	          [-36.735066621349276,174.410297870636],
+	          [-36.73432717313698,174.41034078598022],
 	          ],
+	          popup:{
+						className:'kcPopup',
+						content:'<h3>Kamma Cuzzy</h3><img src="assets/bike1.png">',
+						latlng:[-36.735616903768616,174.40720796585083]
+						}
 	}
 	];
 
 		_(bikeTrack).each(function(track){
 
-		let polyline = L.polyline(track.latlng,{color:'#61BF4F', weight:1}).addTo(map);
+		let polyline = L.polyline(track.latlng,{color:'#033344', weight:3}).addTo(map);
 
-	});
+
+
+		let popup = L.popup({
+				// closeButton:false,
+				closeOnClick:false,
+				className: track.popup.className,
+				offset:[0,0],
+				maxWidth:190
+	})
+		.setLatLng(track.popup.latlng)
+			.setContent(track.popup.content)
+			.addTo(map);
+
+			polyline.on('click',function(){
+				if(map.hasLayer(popup)){
+					map.closePopup(popup);
+				}else{
+					map.addLayer(popup);
+				}
+			});
+		});
+
+//office building =================	
 
 	let officeBuilding = [
 		{
