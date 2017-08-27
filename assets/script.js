@@ -51,6 +51,7 @@ let interestPoints = [
 		className: 'interestInfo',
 		iconSize: [30,30],
 		iconImage: 'assets/info.svg'
+		
 	}
 
 ];
@@ -69,6 +70,7 @@ _(interestPoints).each(function(interest){
 				closeButton:false,
 				closeOnClick:false,
 				className: 'interestGroup',
+				// content: '<img src="assets/map.svg">',
 				offset:[0,0]
 	})
 		.setLatLng(interest.latlng)
@@ -218,14 +220,84 @@ _(interestPoints).each(function(interest){
 		            [-36.74024255940825,174.4236981868744],
 		            [-36.739399988623326,174.42296862602234],
 		            [-36.739537551832214,174.4222390651703],
-			],
+					],
+					popup:{
+						className: 'officePopup',
+						content: '<h3>Woodhill Office</h3><img src="assets/office.svg">',
+						latlng:[-36.74055207288394,174.42272186279297]
+					}
 		}
 		];
 			_(officeBuilding).each(function(building){
 
 			let polygon = L.polygon(building.latlng,{color:'white',fillOpacity:0,weight:2}).addTo(map);
 
+				let popup = L.popup({
+				// closeButton:false,
+				closeOnClick:false,
+				className: building.popup.className,
+				offset:[0,0],
+				maxWidth:190
+	})
+		.setLatLng(building.popup.latlng)
+			.setContent(building.popup.content)
+			.addTo(map);
+
+			polygon.on('click',function(){
+				if(map.hasLayer(popup)){
+					map.closePopup(popup);
+				}else{
+					map.addLayer(popup);
+				}
 			});
+
+			});
+
+
+//tree ventures ===================
+
+	let treeVentures = [
+		{
+			name: 'Tree Ventures',
+			latlng: [
+				    [-36.73986211405114,174.41996186971664],
+          			[-36.740132939752996,174.42048490047455],
+          			[-36.739945941156215,174.4206377863884],
+          			[-36.739677264213896,174.42010402679443],
+          			[-36.73987286112101,174.41995918750763],
+			],
+		}
+		];
+			_(treeVentures).each(function(ventures){
+
+			let polygon = L.polygon(ventures.latlng,{color:'white',fillOpacity:1,weight:2}).addTo(map);
+
+
+
+
+			let popup = L.popup({
+				// closeButton:false,
+				closeOnClick:false,
+				className: ventures.popup.className,
+				offset:[0,0],
+				maxWidth:190
+	})
+		.setLatLng(ventures.popup.latlng)
+			.setContent(ventures.popup.content)
+			.addTo(map);
+
+			polygon.on('click',function(){
+				if(map.hasLayer(popup)){
+					map.closePopup(popup);
+				}else{
+					map.addLayer(popup);
+				}
+			});
+
+			});
+
+
+
 
 	});
 
