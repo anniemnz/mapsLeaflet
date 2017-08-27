@@ -67,7 +67,7 @@ _(interestPoints).each(function(interest){
 
 
 		let popup = L.popup({
-				closeButton:false,
+				// closeButton:false,
 				closeOnClick:false,
 				className: 'interestGroup',
 				// content: '<img src="assets/map.svg">',
@@ -159,7 +159,7 @@ _(interestPoints).each(function(interest){
 
 	//bike tracks ============================
 
-	let bikeTrack = [
+	let bikeTracks = [
 		{
 			name:'Kamma Cuzzy',
 			latlng: [
@@ -181,23 +181,24 @@ _(interestPoints).each(function(interest){
 						}
 	}
 	];
+		let trackGroup = L.layerGroup();
 
-		_(bikeTrack).each(function(track){
+		_(bikeTracks).each(function(tracks){
 
-		let polyline = L.polyline(track.latlng,{color:'#033344', weight:3}).addTo(map);
+		let polyline = L.polyline(tracks.latlng,{color:'#033344', weight:3});
 
-
+		trackGroup.addLayer(polyline);
 
 		let popup = L.popup({
 				// closeButton:false,
 				closeOnClick:false,
-				className: track.popup.className,
+				className: tracks.popup.className,
 				offset:[0,0],
 				maxWidth:190
 	})
-		.setLatLng(track.popup.latlng)
-			.setContent(track.popup.content)
-			.addTo(map);
+		.setLatLng(tracks.popup.latlng)
+			.setContent(tracks.popup.content)
+			// .addTo(map);
 
 			polyline.on('click',function(){
 				if(map.hasLayer(popup)){
@@ -228,9 +229,13 @@ _(interestPoints).each(function(interest){
 					}
 		}
 		];
+
+			let officeGroup = L.layerGroup();
+
 			_(officeBuilding).each(function(building){
 
-			let polygon = L.polygon(building.latlng,{color:'white',fillOpacity:0,weight:2}).addTo(map);
+			let polygon = L.polygon(building.latlng,{color:'white',fillOpacity:0,weight:2});
+			officeGroup.addLayer(polygon);
 
 				let popup = L.popup({
 				// closeButton:false,
@@ -239,9 +244,9 @@ _(interestPoints).each(function(interest){
 				offset:[0,0],
 				maxWidth:190
 	})
-		.setLatLng(building.popup.latlng)
+			.setLatLng(building.popup.latlng)
 			.setContent(building.popup.content)
-			.addTo(map);
+			// .addTo(map);
 
 			polygon.on('click',function(){
 				if(map.hasLayer(popup)){
@@ -265,15 +270,21 @@ _(interestPoints).each(function(interest){
           			[-36.739945941156215,174.4206377863884],
           			[-36.739677264213896,174.42010402679443],
           			[-36.73987286112101,174.41995918750763],
-			],
+					],
+					popup:{
+              			className:'tree-popup',
+              			content:'<div>Tree Ventures</div>',
+              			latlng:[-36.739945941156215,174.4206377863884]
+              		}
 		}
 		];
+
+		let treeGroup = L.layerGroup();
+
 			_(treeVentures).each(function(ventures){
 
-			let polygon = L.polygon(ventures.latlng,{color:'white',fillOpacity:1,weight:2}).addTo(map);
-
-
-
+			let polygon = L.polygon(ventures.latlng,{color:'white',fillOpacity:1,weight:2});
+			treeGroup.addLayer(polygon);
 
 			let popup = L.popup({
 				// closeButton:false,
@@ -282,9 +293,9 @@ _(interestPoints).each(function(interest){
 				offset:[0,0],
 				maxWidth:190
 	})
-		.setLatLng(ventures.popup.latlng)
+			.setLatLng(ventures.popup.latlng)
 			.setContent(ventures.popup.content)
-			.addTo(map);
+			// .addTo(map);
 
 			polygon.on('click',function(){
 				if(map.hasLayer(popup)){
@@ -296,7 +307,14 @@ _(interestPoints).each(function(interest){
 
 			});
 
+			let baseLayers = {};
+			let overlayers = {
+				'Bike Tracks':trackGroup,
+				'Woodhill Office':officeGroup,
+				'Trees':treeGroup
+	};
 
+	L.control.layers(baseLayers,overlayers).addTo(map);
 
 
 	});
